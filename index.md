@@ -1,37 +1,263 @@
-## Welcome to GitHub Pages
+<html itemscope itemtype="http://schema.org/Product" prefix="og: http://ogp.me/ns#" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta http-equiv="origin-trial" content="AgrHPASqxKwPM4tUmJX0Cd7IzdPkp+EYVnPHvS4ZMgWIL8Cnvj2LPyFeqUBPV1sVm9obij3Kv1wG7EPInSchOwMAAABZeyJvcmlnaW4iOiJodHRwczovL21lZXQuaml0LnNpOjQ0MyIsImZlYXR1cmUiOiJSVENJbnNlcnRhYmxlU3RyZWFtcyIsImV4cGlyeSI6MTYwMTQyMzk5OX0=">
 
-You can use the [editor on GitHub](https://github.com/JayEs23/Gilgal/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="https://web-cdn.jitsi.net/meetjitsi_4392.1013/" />
+<title>aaaaaaaaaaaaaaaaaaaaaaaaa</title>
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="stylesheet" href="css/all.css?v=4392.1013">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!JitsiMeetJS.app) {
+                return;
+            }
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+            JitsiMeetJS.app.renderEntryPoint({
+                Component: JitsiMeetJS.app.entryPoints.APP
+            })
+        })
+    </script>
+    <script>
+        // IE11 and earlier can be identified via their user agent and be
+        // redirected to a page that is known to have no newer js syntax.
+        if (window.navigator.userAgent.match(/(MSIE|Trident)/)) {
+            var roomName = encodeURIComponent(window.location.pathname);
+            window.location.href = "static/recommendedBrowsers.html" + "?room=" + roomName;
+        }
 
-### Markdown
+        window.indexLoadedTime = window.performance.now();
+        console.log("(TIME) index.html loaded:\t", indexLoadedTime);
+        // XXX the code below listeners for errors and displays an error message
+        // in the document body when any of the required files fails to load.
+        // The intention is to prevent from displaying broken page.
+        var criticalFiles = [
+            "config.js",
+            "utils.js",
+            "do_external_connect.js",
+            "interface_config.js",
+            "logging_config.js",
+            "lib-jitsi-meet.min.js",
+            "app.bundle.min.js",
+            "all.css?v=4392.1013"
+        ];
+        var loadErrHandler = function(e) {
+            var target = e.target;
+            // Error on <script> and <link>(CSS)
+            // <script> will have .src and <link> .href
+            var fileRef = (target.src ? target.src : target.href);
+            if (("SCRIPT" === target.tagName || "LINK" === target.tagName)
+                && criticalFiles.some(
+                    function(file) { return fileRef.indexOf(file) !== -1 })) {
+                window.onload = function() {
+                    // The whole complex part below implements page reloads with
+                    // "exponential backoff". The retry attempt is passes as
+                    // "rCounter" query parameter
+                    var href = window.location.href;
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+                    var retryMatch = href.match(/.+(\?|&)rCounter=(\d+)/);
+                    var retryCountStr = retryMatch ? retryMatch[2] : "0";
+                    var retryCount = Number.parseInt(retryCountStr);
 
-```markdown
-Syntax highlighted code block
+                    if (retryMatch == null) {
+                        var separator = href.indexOf("?") === -1 ? "?" : "&";
+                        var hashIdx = href.indexOf("#");
 
-# Header 1
-## Header 2
-### Header 3
+                        if (hashIdx === -1) {
+                            href += separator + "rCounter=1";
+                        } else {
+                            var hashPart = href.substr(hashIdx);
 
-- Bulleted
-- List
+                            href = href.substr(0, hashIdx)
+                                + separator + "rCounter=1" + hashPart;
+                        }
+                    } else {
+                        var separator = retryMatch[1];
 
-1. Numbered
-2. List
+                        href = href.replace(
+                            /(\?|&)rCounter=(\d+)/,
+                            separator + "rCounter=" + (retryCount + 1));
+                    }
 
-**Bold** and _Italic_ and `Code` text
+                    var delay = Math.pow(2, retryCount) * 2000;
+                    if (isNaN(delay) || delay < 2000 || delay > 60000)
+                        delay = 10000;
 
-[Link](url) and ![Image](src)
-```
+                    var showMoreText = "show more";
+                    var showLessText = "show less";
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+                    document.body.innerHTML
+                        = "<div style='"
+                        + "position: absolute;top: 50%;left: 50%;"
+                        + "text-align: center;"
+                        + "font-size: medium;"
+                        + "font-weight: 400;"
+                        + "transform: translate(-50%, -50%)'>"
+                        + "Uh oh! We couldn't fully download everything we needed :("
+                        + "<br/> "
+                        + "We will try again shortly. In the mean time, check for problems with your Internet connection!"
+                        + "<br/><br/> "
+                        + "<div id='moreInfo' style='"
+                        + "display: none;'>" + "Missing " + fileRef
+                        + "<br/><br/></div>"
+                        + "<a id='showMore' style='"
+                        + "text-decoration: underline;"
+                        + "font-size:small;"
+                        + "cursor: pointer'>" + showMoreText + "</a>"
+                        + "&nbsp;&nbsp;&nbsp;"
+                        + "<a id ='reloadLink' style='"
+                        + "text-decoration: underline;"
+                        + "font-size:small;"
+                        + "'>reload now</a>"
+                        + "</div>";
 
-### Jekyll Themes
+                    var reloadLink = document.getElementById('reloadLink');
+                    reloadLink.setAttribute('href', href);
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/JayEs23/Gilgal/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+                    var showMoreElem = document.getElementById("showMore");
+                    showMoreElem.addEventListener('click', function () {
+                            var moreInfoElem
+                                    = document.getElementById("moreInfo");
 
-### Support or Contact
+                            if (showMoreElem.innerHTML === showMoreText) {
+                                moreInfoElem.setAttribute(
+                                    "style",
+                                    "display: block;"
+                                    + "color:#FF991F;"
+                                    + "font-size:small;"
+                                    + "user-select:text;");
+                                showMoreElem.innerHTML = showLessText;
+                            }
+                            else {
+                                moreInfoElem.setAttribute(
+                                    "style", "display: none;");
+                                showMoreElem.innerHTML = showMoreText;
+                            }
+                        });
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+                    window.setTimeout(
+                        function () { window.location.replace(href); }, delay);
+
+                    // Call extra handler if defined.
+                    if (typeof postLoadErrorHandler === "function") {
+                        postLoadErrorHandler(fileRef);
+                    }
+                };
+                window.removeEventListener(
+                    'error', loadErrHandler, true /* capture phase */);
+            }
+        };
+        window.addEventListener(
+            'error', loadErrHandler, true /* capture phase type of listener */);
+    </script>
+    <script src="https://meet.jit.si/config.js"></script>
+    <script src="https://maxired.github.io/myjitsi/config.js"></script>
+    <script src="libs/external_connect.js?v=1"></script>
+
+    <script src="libs/do_external_connect.min.js?v=1"></script>
+    <script src="interface_config.js"></script>
+   
+    <script src="https://maxired.github.io/myjitsi/interface_config.js"></script>
+   
+    <script>/* eslint-disable no-unused-vars, no-var */
+
+// Logging configuration
+var loggingConfig = {
+    // default log level for the app and lib-jitsi-meet
+    defaultLogLevel: 'trace',
+
+    // Option to disable LogCollector (which stores the logs on CallStats)
+    // disableLogCollector: true,
+
+    // The following are too verbose in their logging with the
+    // {@link #defaultLogLevel}:
+    'modules/RTC/TraceablePeerConnection.js': 'info',
+    'modules/statistics/CallStats.js': 'info',
+    'modules/xmpp/strophe.util.js': 'log'
+};
+
+/* eslint-enable no-unused-vars, no-var */
+
+// XXX Web/React server-includes logging_config.js into index.html.
+// Mobile/react-native requires it in react/features/base/logging. For the
+// purposes of the latter, (try to) export loggingConfig. The following
+// detection of a module system is inspired by webpack.
+typeof module === 'object'
+    && typeof exports === 'object'
+    && (module.exports = loggingConfig);
+</script>
+    <script src="libs/lib-jitsi-meet.min.js?v=4392.1013"></script>
+    <script src="libs/app.bundle.min.js?v=4392.1013"></script>
+    <title>Gilgal Meet</title>
+<meta property="og:title" content="Gilgal Meet"/>
+<meta property="og:image" content="images/jitsilogo.png?v=1"/>
+<meta property="og:description" content="Join a WebRTC video conference powered by the Jitsi Videobridge"/>
+<meta description="Join a WebRTC video conference powered by the Gilgal Videobridge"/>
+<meta itemprop="name" content="Jitsi Meet"/>
+<meta itemprop="description" content="Join a WebRTC video conference powered by the Jitsi Videobridge"/>
+<meta itemprop="image" content="images/jitsilogo.png?v=1"/>
+<link rel="icon" type="image/png" href="images/favicon.ico?v=1"/>
+
+    
+
+<script>
+(function() {
+  var filter_list=[];
+  if (filter_list && filter_list.length >0) {
+    interfaceConfig.TOOLBAR_BUTTONS = interfaceConfig.TOOLBAR_BUTTONS.filter(function (e) {
+      return filter_list.indexOf(e) == -1;
+    });
+  }
+
+  // Function called when any of the critical index.html resources
+  // fail to load.
+  window.postLoadErrorHandler = function (fileRef) {
+    if (typeof config.hepopAnalyticsUrl !== 'string'
+        || typeof config.hepopAnalyticsEvent !== "object") {
+        // Nothing to be done here
+        return;
+    }
+    function responseHandler () {
+        console.log("HEPop analytics response:", this.responseText);
+    }
+    // Set required dynamic fields
+    var event = config.hepopAnalyticsEvent;
+    event.serverTime = new Date().getTime();
+
+    if (config) {
+        event.user = config.deploymentInfo;
+    } else {
+        event.user = {};
+    }
+    event.device_id=Math.random().toString(36).substring(2);
+
+    if (window.localStorage) {
+        event.user.callstats_name
+            = window.localStorage.callStatsUserName;
+    }
+
+    if (fileRef) {
+        event.user.reason = fileRef;
+    }
+    event.user.url = window.location.href;
+    event.user.conference_name = window.location.pathname.substr(1,window.location.pathname.length-1);
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load", responseHandler);
+    xhttp.open("POST", config.hepopAnalyticsUrl, true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.send(JSON.stringify(event));
+  };
+}());
+</script>
+    
+    <template id="settings-toolbar-additional-content-template"></template>
+
+  </head>
+  <body>
+    
+    <div id="react"></div>
+  </body>
+</html>
